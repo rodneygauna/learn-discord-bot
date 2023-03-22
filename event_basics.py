@@ -17,6 +17,7 @@ DISCORD_BOT_TOKEN = os.getenv('DISCORD_TOKEN')
 # Discord "Message Content Intent"
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 
 
 # Global Variables
@@ -68,6 +69,26 @@ async def on_raw_reaction_add(payload):
             role = discord.utils.get(guild.roles, name='Pirate')
             await member.add_roles(role)
             print('Pirate role added')
+
+
+# Remove role based on reaction
+@bot.event
+async def on_raw_reaction_remove(payload):
+    emoji = payload.emoji.name
+    message_id = payload.message_id
+    guild_id = payload.guild_id
+    guild = bot.get_guild(guild_id)
+    member = guild.get_member(payload.user_id)
+
+    if message_id == 1088201588448968846:
+        if emoji == '🥷':
+            role = discord.utils.get(guild.roles, name='Ninja')
+            await member.remove_roles(role)
+            print('Ninja role removed')
+        elif emoji == '🏴‍☠️':
+            role = discord.utils.get(guild.roles, name='Pirate')
+            await member.remove_roles(role)
+            print('Pirate role removed')
 
 
 # Run the bot
