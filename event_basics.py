@@ -40,6 +40,17 @@ async def on_message(msg):
             await msg.channel.send(f"Howdy there, {username}!")
 
 
+# DM member that joined the server
+@bot.event
+async def on_member_join(member):
+    guild = member.guild
+    guildname = guild.name
+    dmchannel = await member.create_dm()
+
+    await dmchannel.send(f"Welcome to {guildname}!")
+
+
+
 # Run the bot
 bot.run(DISCORD_BOT_TOKEN)
 
