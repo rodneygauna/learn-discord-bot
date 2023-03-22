@@ -50,7 +50,25 @@ async def on_member_join(member):
     await dmchannel.send(f"Welcome to {guildname}!")
 
 
+# Add role based on reaction
+@bot.event
+async def on_raw_reaction_add(payload):
+    emoji = payload.emoji.name
+    member = payload.member
+    message_id = payload.message_id
+    guild_id = payload.guild_id
+    guild = bot.get_guild(guild_id)
+
+    if message_id == 1088201588448968846:
+        if emoji == '🥷':
+            role = discord.utils.get(guild.roles, name='Ninja')
+            await member.add_roles(role)
+            print('Ninja role added')
+        elif emoji == '🏴‍☠️':
+            role = discord.utils.get(guild.roles, name='Pirate')
+            await member.add_roles(role)
+            print('Pirate role added')
+
 
 # Run the bot
 bot.run(DISCORD_BOT_TOKEN)
-
